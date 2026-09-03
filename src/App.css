@@ -36,3 +36,66 @@
     transform: rotate(360deg);
   }
 }
+
+/* src/App.css */
+.navbar {
+  background-color: #f3f5f8 !important; /* Azul institucional ejemplo */
+  transition: all 0.3s ease;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Efecto hover suave */
+.nav-link:hover {
+  color: #ffcc00 !important; /* Dorado ejemplo */
+}
+
+/* Por defecto (móvil) */
+.footer-logo-svg {
+  width: 100px;
+  height: auto;
+  display: inline-block;
+}
+
+/* En pantallas medianas o grandes (escritorio) */
+@media (min-width: 120px) {
+  .footer-logo-svg {
+    width: 150px; /* Un poco más grande en PC */
+  }
+}
+
+/* Asegura que el contenedor de React ocupe todo el alto del navegador */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Evita que el contenido se pegue demasiado al footer */
+main {
+  padding-bottom: 2rem;
+}
+
+/* App.css */
+.navbar-logo-white {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+/* Forzamos el color de relleno y trazo a blanco */
+.navbar-logo-white path,
+.navbar-logo-white rect,
+.navbar-logo-white circle {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}

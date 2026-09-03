@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { authService } from '../services/authService';
 
-const LoginForm = ({ onLogin, whiteList, onGoToRegister }) => {
+const LoginForm = ({ onLogin, onGoToRegister }) => {
+  const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
 
@@ -8,19 +10,30 @@ const LoginForm = ({ onLogin, whiteList, onGoToRegister }) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Validar contra la White List
-    const validUser = whiteList.find(
-      (u) => u.email === credentials.email && u.password === credentials.password
-    );
+ 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError('');
 
-    if (validUser) {
-      onLogin(); // Cambia el estado en App.js
+  try {
+    // Llamamos al servicio
+    const response = await authService.login(credentials.email, credentials.password);
+    
+    // VALIDACIÓN CRÍTICA:
+    if (response && response.success) {
+      // Pasamos TODO el objeto response a App.js
+      onLogin(response); 
     } else {
-      setError('Credenciales incorrectas. Intenta de nuevo.');
+      setError("Respuesta de servidor inválida");
     }
-  };
+  } catch (err) {
+    // Si el error viene de la API o del Mock reject
+    setError(err.message || "Error al conectar con el servidor");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
